@@ -1,0 +1,30 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "width": 700,
+  "height": 300,
+  "params": [{"name": "numU", "select": "point"}],
+  "data": {
+    "url": "https://raw.githubusercontent.com/TunchanokWipusitworakun/vegamap/main/district.json",
+    "format": {"type": "topojson", "feature": "geodata"}
+  },
+  "transform": [
+    {
+      "lookup": "properties.dcode",
+      "from": {
+        "data": {
+          "url": "https://raw.githubusercontent.com/TunchanokWipusitworakun/vegamap/main/vegamap.csv"
+        },
+        "key": "dcode",
+        "fields": ["density"]
+      }
+    }
+  ],
+  "mark": {"type": "geoshape"},
+  "projection": {"type": "Mercator"},
+  "encoding": {
+    "color": {
+      "condition": {"param": "numU", "field": "density", "type": "quantitative"}
+    }
+  },
+  "config": {}
+}
